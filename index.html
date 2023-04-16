@@ -14,21 +14,18 @@
         body {
             margin: 0;
             font-family: sans-serif;
-            background: linear-gradient(rgba(0, 0, 0, 0.05), lightsteelblue);
-            background-size: cover;
-            min-height: 100vh;
+            background-color: whitesmoke;
         }
 
         .main-content {
             max-width: 1000px;
             margin: 0 auto;
-            display: grid;
-            place-items: center;
+            padding: 2em;
+            min-height: 100vh;
         }
 
-        h2 {
-            font-size: 2rem;
-            color: hsla(0, 100%, 30%, 0.6);
+        h1 {
+            text-transform: uppercase;
         }
 
         .searchbox {
@@ -48,17 +45,24 @@
 
         input {
             border: 1px solid transparent;
-            background-color: white;
             padding: 10px;
             font-size: 16px;
             width: 200px;
             transition: width 500ms ease;
             transition-delay: 100ms;
+            border-radius: 12px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         input:is(:focus) {
             width: 100%;
-            outline: 2px solid hsla(0, 100%, 20%, 0.5);
+            outline: 2px solid black;
+        }
+
+        input.border {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
 
         .blog-preview .title {
@@ -75,26 +79,22 @@
             width: calc(100% + 4px);
             max-height: 200px;
             overflow-y: scroll;
-            background-color: hsl(214, 41%, 91%);
+            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid rgba(0, 0, 0, 0.2);
+            border: 2px solid black;
             border-top: 2px transparent;
         }
 
         .search-result-list.active {
             display: grid;
-            grid-gap: 1em;
-        }
-
-        .search-result-list {
-            padding: 10px;
         }
 
         .search-result-list>div {
             position: relative;
             padding: 0.5em;
             cursor: pointer;
-            scroll-margin-bottom: 12px;
+            scroll-margin-bottom: 10px;
+            margin-top: 2px;
         }
 
         .search-result-list>div:not(:last-child)::after {
@@ -102,14 +102,14 @@
             position: absolute;
             left: 0;
             width: 100%;
-            top: calc(100% + 0.5em);
-            border-top: 1px solid hsl(214, 41%, 85%);
+            top: calc(100%);
+            border-top: 2px solid rgba(0, 0, 0, 0.1);
             outline: none;
         }
 
         .search-result-list>div:is(:hover),
         .search-result-list>div.selected {
-            background-color: hsl(214, 41%, 95%);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         mark {
@@ -131,7 +131,7 @@
     <!-- Main content -->
     <div class="main-content">
 
-        <h2>Autocomplete blog post search example</h2>
+        <h1>Autocomplete blog post search example</h1>
 
         <!-- Searchbox -->
         <div class="searchbox">
@@ -186,7 +186,10 @@
         searchBar.addEventListener("focusout", function (e) {
             searchBar.parentElement.style.flexGrow = 0;
             selectedIndex = -1;
-            setTimeout(() => resultList.classList.remove("active"), 100);
+            setTimeout(() => {
+                resultList.classList.remove("active");
+                searchBar.classList.remove("border")
+            }, 100);
         });
 
         // Add enter eventlistener
@@ -257,10 +260,14 @@
             // Return if no search value
             if (!searchBar.value) {
                 resultList.classList.remove("active");
+                searchBar.classList.remove("border")
                 return;
             }
             // Make result list active
-            setTimeout(() => resultList.classList.add("active"), 600);
+            setTimeout(() => {
+                resultList.classList.add("active");
+                searchBar.classList.add("border")
+            }, 600);
 
             // Placeholder API
             blogPosts = await fetch('https://jsonplaceholder.typicode.com/posts').then(response => response.json());
