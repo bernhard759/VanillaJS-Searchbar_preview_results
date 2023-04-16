@@ -200,11 +200,11 @@
 
         // Check scrolling on result list
         resultList.addEventListener("scroll", () => {
-            console.log(resultList.scrollHeight, resultList.scrollTop, resultList.offsetHeight);
+            //console.log(resultList.scrollHeight, resultList.scrollTop, resultList.offsetHeight);
             if (resultList.scrollHeight - resultList.scrollTop <= resultList.offsetHeight) {
-                console.log("load more posts", previewNum, previewNum + 5)
+                //console.log("load more posts", previewNum, previewNum + 5)
                 FILTERED_LIST.slice(previewNum, previewNum + 5).forEach(item => {
-                    console.log("render more", item, searchBar.value);
+                    //console.log("render more", item, searchBar.value);
                     renderListItem(item, searchBar.value);
                 });
                 previewNum += 5;
@@ -253,7 +253,7 @@
 
         // Render the search list
         async function renderSearchList() {
-            console.log("render list");
+            //console.log("render list");
             // Empty the filtered items list
             FILTERED_LIST.splice(0, FILTERED_LIST.length);
             // Empty the list items
@@ -302,7 +302,7 @@
                 renderListItem(item, searchVal);
             });
             previewNum += 5;
-            console.log(previewNum)
+            //console.log(previewNum)
         }
 
 
