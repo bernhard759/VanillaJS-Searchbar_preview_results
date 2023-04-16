@@ -92,6 +92,9 @@
             padding: 0.5em;
             cursor: pointer;
             scroll-margin-bottom: 10px;
+        }
+
+        .search-result-list>div:not(:first-child) {
             margin-top: 2px;
         }
 
@@ -197,7 +200,8 @@
 
         // Check scrolling on result list
         resultList.addEventListener("scroll", () => {
-            if (resultList.scrollHeight - resultList.scrollTop == resultList.offsetHeight) {
+            console.log(resultList.scrollHeight, resultList.scrollTop, resultList.offsetHeight);
+            if (resultList.scrollHeight - resultList.scrollTop <= resultList.offsetHeight) {
                 console.log("load more posts", previewNum, previewNum + 5)
                 FILTERED_LIST.slice(previewNum, previewNum + 5).forEach(item => {
                     console.log("render more", item, searchBar.value);
